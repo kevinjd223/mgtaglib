@@ -1,5 +1,4 @@
-/*
- * TextTag.java
+/* TextTag.java
  *
  * Created on September 26, 2003, 11:13 PM
  * Copyright 2002-2005 Kevin Delargy.
@@ -15,7 +14,6 @@ import com.modelgenerated.util.Assert;
 import com.modelgenerated.util.StringUtil;
 
 import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -63,12 +61,8 @@ public class TextTag extends TagSupport {
     }
     
     public int doStartTag() throws JspException {
-	// Generate the URL to be encoded
-	try {
-            Logger.debug(this, "modelgenerated:TextTag Start");
-            HttpServletRequest request =
-                (HttpServletRequest) pageContext.getRequest();    
-    
+        // Generate the URL to be encoded
+        try {
             JspWriter writer = pageContext.getOut();
             StringBuffer strBuff = new StringBuffer();
             strBuff.append("<input type='text' ");
@@ -112,13 +106,13 @@ public class TextTag extends TagSupport {
             Logger.debug(this, "modelgenerated:TextTag Start3");
             strBuff.append("/>");
             
-	    writer.print(strBuff.toString());
-            
-	} catch (IOException e) {
-	    throw new JspException("link.io", e);
-	}
-	// Evaluate the body of this tag
-	return (EVAL_BODY_INCLUDE);
+            writer.print(strBuff.toString());
+
+        } catch (IOException e) {
+            throw new JspException("link.io", e);
+        }
+        // Evaluate the body of this tag
+        return (EVAL_BODY_INCLUDE);
     }
 
     private String getValue(){
@@ -147,15 +141,7 @@ public class TextTag extends TagSupport {
     }
     
     public int doEndTag() throws JspException {
-	// Print the ending element to our output writer
-	//JspWriter writer = pageContext.getOut();
-	//try {
-	    //writer.print("</text>");
-	//} catch (IOException e) {
-	//    throw new JspException("link.io", e);
-	//}
-
-	return (EVAL_PAGE);
+	    return (EVAL_PAGE);
     }
     
 }
