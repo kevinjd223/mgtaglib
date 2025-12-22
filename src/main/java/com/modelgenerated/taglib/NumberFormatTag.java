@@ -8,16 +8,12 @@
 package com.modelgenerated.taglib;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import com.modelgenerated.foundation.config.ConfigLocator;
-import com.modelgenerated.foundation.dataaccess.ObjectFieldSizeConfig;
-import com.modelgenerated.foundation.logging.Logger;
 import com.modelgenerated.util.Assert;
 import com.modelgenerated.util.NumberUtil;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -37,35 +33,26 @@ public class NumberFormatTag extends TagSupport {
     }
     
     public void setName(String newName) {
-        //Logger.debug(this, "setName: " + newName);
         name = newName;
     }
     
     public void setProperty(String newProperty) {
-        //Logger.debug(this, "setProperty: " + newProperty);
         property = newProperty;
     }
     
     public void setMinPrecision(String newMinPrecision) {
-        //Logger.debug(this, "setMinPrecision: " + newMinPrecision);
         minPrecision = newMinPrecision;
     }
     
     public void setMaxPrecision(String newMaxPrecision) {
-        //Logger.debug(this, "setMaxPrecision: " + newMaxPrecision);
         maxPrecision = newMaxPrecision;
     }
     
     public int doStartTag() throws JspException {
     	// Generate the URL to be encoded
     	try {
-            //Logger.debug(this, "modelgenerated:TextTag Start");
-            HttpServletRequest request =
-                (HttpServletRequest) pageContext.getRequest();    
-    
             JspWriter writer = pageContext.getOut();
             StringBuffer strBuff = new StringBuffer();
-            //Logger.debug(this, "modelgenerated:TextTag Start2");
             String value = getValue();
             strBuff.append(value);
             
@@ -117,14 +104,6 @@ public class NumberFormatTag extends TagSupport {
     }
     
     public int doEndTag() throws JspException {
-    	// Print the ending element to our output writer
-    	//JspWriter writer = pageContext.getOut();
-    	//try {
-    	    //writer.print("</text>");
-    	//} catch (IOException e) {
-    	//    throw new JspException("link.io", e);
-    	//}
-    
     	return (EVAL_PAGE);
     }
 

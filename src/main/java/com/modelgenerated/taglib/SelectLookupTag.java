@@ -1,6 +1,4 @@
-/*
- * TextTag.java
- *
+/* SelectLookupTag.java
  * Created on September 26, 2003, 11:13 PM
  * Copyright 2002-2005 Kevin Delargy.
  */
@@ -16,11 +14,9 @@ import com.modelgenerated.util.StringUtil;
 
 import java.io.IOException;
 import java.util.Iterator;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
-import org.apache.struts.action.DynaActionForm;
 
 
 /**
@@ -46,35 +42,28 @@ public class SelectLookupTag extends TagSupport {
     /** Creates a new instance of TextTag */
     public SelectLookupTag() {
     }
-    
-    
+
     public void setName(String newName) {
-        //Logger.debug(this, "setName");
         name = newName;
     }
     
     public void setOriginalValue(String newOriginalValue) {
-        // Logger.debug(this, "setOriginalValue" + newOriginalValue);
         originalValue = newOriginalValue;
     }
     
     public void setProperty(String newProperty) {
-        //Logger.debug(this, "setProperty");
         property = newProperty;
     }
     
     public void setPropertyPrefix(String newPropertyPrefix) {
-        //Logger.debug(this, "setPropertyPrefix: " + newPropertyPrefix);
         propertyPrefix = newPropertyPrefix;
     }
     
     public void setPropertyId(String newPropertyId) {
-        //Logger.debug(this, "setPropertyId: " + newPropertyId);
         propertyId = newPropertyId;
     }
     
     public void setLookupList(String newLookupList) {
-        //Logger.debug(this, "setLookupList");
         lookupList = newLookupList;
     }
     
@@ -95,86 +84,70 @@ public class SelectLookupTag extends TagSupport {
     }
 
     public int doStartTag() throws JspException {
-	// Generate the URL to be encoded
-	try {
-            //Logger.debug(this, "Start");
-            HttpServletRequest request =
-                (HttpServletRequest) pageContext.getRequest();    
-    
-            JspWriter writer = pageContext.getOut();
-            StringBuffer strBuff = new StringBuffer();
-            strBuff.append("<select ");
-            
-            // select name 
-            strBuff.append("name='");            
-            //Logger.debug(this, "Start2");
-            if (!StringUtil.isEmpty(property)) { 
-                strBuff.append(property);            
-            } else {
-                strBuff.append(propertyPrefix);            
-                strBuff.append(getIdValue());            
-             }
-            strBuff.append("' ");   
-            
-            // select class
-            if (styleClass != null) { 
-                strBuff.append("class='");
-                strBuff.append(styleClass);            
-                strBuff.append("' ");            
-            }
-            strBuff.append(">" + EOL);
-            
-            if (emptyOptionKey != null && emptyOptionKey.length() > 0) {
-                
-                // Retrieve the message string we are looking for
-                //String MESSAGE_KEY = "org.apache.struts.action.ACTION_MESSAGE";
-                //MessageResources resources = (MessageResources) pageContext.findAttribute(MESSAGE_KEY);
-                //Assert.check(resources != null, "resources != null");
-                
-                //MessageResources resources = MessageResources.getMessageResources("org.apache.struts.taglib.bean.LocalStrings");
+        // Generate the URL to be encoded
+        try {
+                JspWriter writer = pageContext.getOut();
+                StringBuffer strBuff = new StringBuffer();
+                strBuff.append("<select ");
 
-                //String emptyOption = resources.getMessage(emptyOptionKey);
-
-                
-                strBuff.append("<option value=''>");            
-                strBuff.append(emptyOptionKey);            
-                strBuff.append("</option>" + EOL);
-            }
-            
-            String value = getSelectedValue();
-            
-            LookupDataList lookupDataList = getLookupDataList();
-            Assert.check(lookupDataList != null, "lookupDataList != null");
-            
-            Iterator i = lookupDataList.iterator();
-            while (i.hasNext()) {
-                LookupData lookupData = (LookupData)i.next();
-                
-                String optionValue = lookupData.getCode();
-                String display = lookupData.getDisplay();
-                String status = lookupData.getStatus();
-                String style = lookupData.getDisplayStyle();
-                //Logger.debug(this, "doStartTag - style:" + style);
-                
-                if (valuesEqual(optionValue, value)) {
-                    writeOption(strBuff, optionValue, display, style, true);
+                // select name
+                strBuff.append("name='");
+                if (!StringUtil.isEmpty(property)) {
+                    strBuff.append(property);
                 } else {
-                    if (!"disabled".equals(status)) {
-                        writeOption(strBuff, optionValue, display, style, false);
+                    strBuff.append(propertyPrefix);
+                    strBuff.append(getIdValue());
+                 }
+                strBuff.append("' ");
+
+                // select class
+                if (styleClass != null) {
+                    strBuff.append("class='");
+                    strBuff.append(styleClass);
+                    strBuff.append("' ");
+                }
+                strBuff.append(">" + EOL);
+
+                if (emptyOptionKey != null && emptyOptionKey.length() > 0) {
+                    strBuff.append("<option value=''>");
+                    strBuff.append(emptyOptionKey);
+                    strBuff.append("</option>" + EOL);
+                }
+
+                String value = getSelectedValue();
+
+                LookupDataList lookupDataList = getLookupDataList();
+                Assert.check(lookupDataList != null, "lookupDataList != null");
+
+                Iterator i = lookupDataList.iterator();
+                while (i.hasNext()) {
+                    LookupData lookupData = (LookupData)i.next();
+
+                    String optionValue = lookupData.getCode();
+                    String display = lookupData.getDisplay();
+                    String status = lookupData.getStatus();
+                    String style = lookupData.getDisplayStyle();
+                    //Logger.debug(this, "doStartTag - style:" + style);
+
+                    if (valuesEqual(optionValue, value)) {
+                        writeOption(strBuff, optionValue, display, style, true);
+                    } else {
+                        if (!"disabled".equals(status)) {
+                            writeOption(strBuff, optionValue, display, style, false);
+                        }
                     }
-                }              
-                
-            }
-            
-            strBuff.append("<select/>" + EOL);
-            
-	    writer.print(strBuff.toString());
-            
-	} catch (IOException e) {
-	    throw new JspException("link.io", e);
-	}
-	// Evaluate the body of this tag
-	return (EVAL_BODY_INCLUDE);
+
+                }
+
+                strBuff.append("<select/>" + EOL);
+
+            writer.print(strBuff.toString());
+
+        } catch (IOException e) {
+            throw new JspException("link.io", e);
+        }
+        // Evaluate the body of this tag
+        return (EVAL_BODY_INCLUDE);
     }
 
     private void writeOption(StringBuffer strBuff, String value, String display, String style, boolean selected) {
@@ -185,7 +158,6 @@ public class SelectLookupTag extends TagSupport {
         strBuff.append(value);            
         strBuff.append("' ");   
 
-        //Logger.debug(this, "writeOption - style:" + style);
         // select class
         if (style != null && style.length() > 0) { 
             strBuff.append("class='");
@@ -220,28 +192,6 @@ public class SelectLookupTag extends TagSupport {
             lookupDataList = (LookupDataList)this.pageContext.findAttribute(lookupList);
         }            
 
-        /*
-        Logger.debug(this, "request scope");                
-        Enumeration enum = pageContext.getAttributeNamesInScope(PageContext.REQUEST_SCOPE);
-        while (enum.hasMoreElements()) {
-            String attributeName = (String)enum.nextElement();
-            Logger.debug(this, "  enum request attributeName: " + attributeName);                
-        }
-
-        Logger.debug(this, "page scope");                
-        enum = pageContext.getAttributeNamesInScope(PageContext.PAGE_SCOPE);
-        while (enum.hasMoreElements()) {
-            String attributeName = (String)enum.nextElement();
-            Logger.debug(this, "  enum page attributeName: " + attributeName);                
-        }
-        Logger.debug(this, "session scope");                
-        enum = pageContext.getAttributeNamesInScope(PageContext.PAGE_SCOPE);
-        while (enum.hasMoreElements()) {
-            String attributeName = (String)enum.nextElement();
-            Logger.debug(this, "  enum session attributeName: " + attributeName);                
-        }
-        */
-
         return lookupDataList;
     }
     
@@ -255,11 +205,7 @@ public class SelectLookupTag extends TagSupport {
                 Logger.debug(this, "getSelectedValue - bean.toString() - " + bean.toString());
                              
                 if (bean != null) {
-                    if (bean instanceof DynaActionForm) {
-                        value = (String)((DynaActionForm)bean).get(originalValue);
-                    } else {
-                        value = (String)PropertyUtils.getProperty(bean, originalValue);
-                    }                    
+                    value = (String)PropertyUtils.getProperty(bean, originalValue);
                 }
             } else {      
                 value = (String)this.pageContext.getAttribute(originalValue);
@@ -272,7 +218,6 @@ public class SelectLookupTag extends TagSupport {
         } catch (java.lang.NoSuchMethodException e) {
             Logger.debug(this, e);
             throw new RuntimeException("Error getting value", e);
-            //return null;
         }
     }
     
@@ -298,15 +243,7 @@ public class SelectLookupTag extends TagSupport {
     }
     
     public int doEndTag() throws JspException {
-	// Print the ending element to our output writer
-	//JspWriter writer = pageContext.getOut();
-	//try {
-	    //writer.print("</text>");
-	//} catch (IOException e) {
-	//    throw new JspException("link.io", e);
-	//}
-
-	return (EVAL_PAGE);
+        return (EVAL_PAGE);
     }
     
 }
