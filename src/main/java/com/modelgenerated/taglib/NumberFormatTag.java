@@ -75,8 +75,8 @@ public class NumberFormatTag extends TagSupport {
                 if (bean != null) {
                     Double doubleValue = (Double)PropertyUtils.getProperty(bean, property);
 
-                    Integer min = new Integer(minPrecision);
-                    Integer max = new Integer(maxPrecision);
+                    Integer min = Integer.valueOf(minPrecision);
+                    Integer max = Integer.valueOf(maxPrecision);
                     
                     if (doubleValue == null || doubleValue.isNaN()) {
                         // TODO: allow the user to set a string to use if value is null or NaN 
