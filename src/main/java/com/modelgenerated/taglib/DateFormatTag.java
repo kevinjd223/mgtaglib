@@ -44,7 +44,7 @@ public class DateFormatTag extends TagSupport {
         try {
                 //Logger.debug(this, "modelgenerated:TextTag Start");
                 JspWriter writer = pageContext.getOut();
-                StringBuffer strBuff = new StringBuffer();
+                StringBuilder strBuff = new StringBuilder();
                 //Logger.debug(this, "modelgenerated:TextTag Start2");
                 String value = getValue();
                 strBuff.append(value);

@@ -87,7 +87,7 @@ public class SelectLookupTag extends TagSupport {
         // Generate the URL to be encoded
         try {
                 JspWriter writer = pageContext.getOut();
-                StringBuffer strBuff = new StringBuffer();
+                StringBuilder strBuff = new StringBuilder();
                 strBuff.append("<select ");
 
                 // select name
@@ -150,7 +150,7 @@ public class SelectLookupTag extends TagSupport {
         return (EVAL_BODY_INCLUDE);
     }
 
-    private void writeOption(StringBuffer strBuff, String value, String display, String style, boolean selected) {
+    private void writeOption(StringBuilder strBuff, String value, String display, String style, boolean selected) {
         strBuff.append("<option ");
 
         // option value 

@@ -36,7 +36,7 @@ public class FieldSizeTag extends TagSupport {
         // Generate the URL to be encoded
         try {
                 JspWriter writer = pageContext.getOut();
-                StringBuffer strBuff = new StringBuffer();
+                StringBuilder strBuff = new StringBuilder();
                 if (objectField != null) {
                     ObjectFieldSizeConfig objectFieldSizeConfig = (ObjectFieldSizeConfig)ConfigLocator.findConfig(ObjectFieldSizeConfig.CONFIG_NAME);
                     int size = objectFieldSizeConfig.getObjectFieldSize(objectField);

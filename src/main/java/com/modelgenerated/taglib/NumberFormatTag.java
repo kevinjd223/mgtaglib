@@ -52,7 +52,7 @@ public class NumberFormatTag extends TagSupport {
     	// Generate the URL to be encoded
     	try {
             JspWriter writer = pageContext.getOut();
-            StringBuffer strBuff = new StringBuffer();
+            StringBuilder strBuff = new StringBuilder();
             String value = getValue();
             strBuff.append(value);
             

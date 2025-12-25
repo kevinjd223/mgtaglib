@@ -64,7 +64,7 @@ public class TextTag extends TagSupport {
         // Generate the URL to be encoded
         try {
             JspWriter writer = pageContext.getOut();
-            StringBuffer strBuff = new StringBuffer();
+            StringBuilder strBuff = new StringBuilder();
             strBuff.append("<input type='text' ");
             Logger.debug(this, "modelgenerated:TextTag Start2");
             strBuff.append("name='");            
