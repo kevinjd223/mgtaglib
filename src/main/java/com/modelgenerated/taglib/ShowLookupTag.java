@@ -50,7 +50,7 @@ public class ShowLookupTag extends TagSupport {
         // Generate the URL to be encoded
         try {
                 JspWriter writer = pageContext.getOut();
-                StringBuffer strBuff = new StringBuffer();
+                StringBuilder strBuff = new StringBuilder();
 
                 String value = getValue();
 
@@ -60,10 +60,7 @@ public class ShowLookupTag extends TagSupport {
                 String display = value;
                 String style = null;
 
-                Iterator i = lookupDataList.iterator();
-                while (i.hasNext()) {
-                    LookupData lookupData = (LookupData)i.next();
-
+                for (LookupData lookupData : lookupDataList) {
                     String optionValue = lookupData.getCode();
                     if (valuesEqual(optionValue, value)) {
                         display = lookupData.getDisplay();
@@ -94,7 +91,7 @@ public class ShowLookupTag extends TagSupport {
         return (EVAL_BODY_INCLUDE);
     }
 
-    private void writeOption(StringBuffer strBuff, String value, String display, String style, boolean selected) {
+    private void writeOption(StringBuilder strBuff, String value, String display, String style, boolean selected) {
         strBuff.append("<option ");
 
         // option value 
