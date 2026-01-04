@@ -17,12 +17,12 @@
 		<dependency>
 			<groupId>com.modelgenerated</groupId>
 			<artifactId>modelgenerated</artifactId>
-			<version>2.0.2</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 		  <groupId>com.modelgenerated</groupId>
 		  <artifactId>mglookup</artifactId>
-		  <version>1.0.2</version>
+		  <version>2.3.0</version>
 		</dependency>
 	</dependencies>
 	<build>
